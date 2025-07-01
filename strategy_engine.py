@@ -162,9 +162,14 @@ class StrategyEngine:
             last_row = df.iloc[-1]
             prev_row = df.iloc[-2]
 
-            avg_volume = df['volume'].iloc[-101:-1].mean()
-            last_volume = df['volume'].iloc[-1]
+            avg_volume = df['volume'].iloc[-102:-2].mean()
+            last_volume = df['volume'].iloc[-2]
             volume_ok = last_volume > avg_volume * VOLUME_MULTIPLIER
+
+            logging.info(
+                f"[VOLUME DEBUG] Last Volume: {last_volume:.2f}, Avg(100): {avg_volume:.2f}, "
+                f"Required: {avg_volume * VOLUME_MULTIPLIER:.2f}, Volume OK: {volume_ok}"
+            )
 
             trend_up = last_row['close'] > last_row['ema20']
             trend_down = last_row['close'] < last_row['ema20']
