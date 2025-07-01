@@ -148,21 +148,21 @@ class StrategyEngine:
 
     def detect_trade_signal(self) -> Optional[Dict]:
         candles = self.fetch_candles()
-        if len(candles) < 200:
-            logging.warning("⛔ Not enough candles for signal (need at least 200 for volume average).")
+        if len(candles) < 120:
+            logging.warning("⛔ Not enough candles for signal (need at least 100 for volume average + buffer).")
             return None
 
         try:
             df = pd.DataFrame(candles)
             df = self.calculate_technical_indicators(df)
-            if len(df) < 200:
+            if len(df) < 120:
                 logging.warning("⛔ Not enough rows after indicators for volume check.")
                 return None
 
             last_row = df.iloc[-1]
             prev_row = df.iloc[-2]
 
-            avg_volume = df['volume'].iloc[-201:-1].mean()
+            avg_volume = df['volume'].iloc[-101:-1].mean()
             last_volume = df['volume'].iloc[-1]
             volume_ok = last_volume > avg_volume * VOLUME_MULTIPLIER
 
