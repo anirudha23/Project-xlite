@@ -64,7 +64,7 @@ def save_trade_history(entry, sl, tp, direction, result):
     with open(TRADE_HISTORY_FILE, 'w') as f:
         json.dump(history, f, indent=4)
 
-def generate_signal(df):
+def generate_signal():
     latest = df.iloc[-1]
     prev = df.iloc[-2]
 
