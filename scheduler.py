@@ -33,7 +33,7 @@ async def check_for_new_signal():
     if current and current != last:
         print("✅ New signal detected. Sending to Discord...")
         try:
-            await send_to_discord(current)
+            await asyncio.to_thread(send_to_discord, current)
             save_json(TRACK_FILE, current)
         except Exception as e:
             print(f"❌ Failed to send signal to Discord: {e}")
