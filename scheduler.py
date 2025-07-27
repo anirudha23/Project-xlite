@@ -5,7 +5,7 @@ import json
 import os
 import traceback
 from send_signal import send_to_discord
-from strategy_engine import run as generate_and_send_signal
+from strategy_engine import run as generate_and_send_signal  # Not async
 
 SIGNAL_FILE = "last_signal.json"
 TRACK_FILE = "last_sent_signal.json"
@@ -45,9 +45,9 @@ async def run_scheduler():
     print("📅 Async scheduler started. Checking every 5 minutes...")
     while True:
         try:
-            await generate_and_send_signal()
+            generate_and_send_signal()  # ✅ Don't await this, it's not async
             await check_for_new_signal()
         except Exception as e:
             print(f"🔥 Scheduler error: {e}")
             traceback.print_exc()
-        await asyncio.sleep(300)  # Wait 5 minutes before next cycle
+        await asyncio.sleep(300)  # Wait 5 minutes
