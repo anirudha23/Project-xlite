@@ -1,0 +1,6 @@
+discord.py
+flask
+python-dotenv
+schedule
+requests
+pandas
